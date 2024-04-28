@@ -8,13 +8,20 @@ export function App() {
 
   useEffect(function() {
     console.log("useEffect fired")
-    setTimeout(() => { 
-      setWeatherData({
-        temperature: 8,
-        temperatureUnit: "C"
+    const weatherPromise = fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m").then(function(response) {
+      response.json().then(function(json) {
+        console.log(json)
+        setWeatherData({
+          temperature: json.current.temperature_2m,
+          temperatureUnit: json.current_units.temperature_2m
+        })
+        console.log(`Post Set: The current value of weather data is: ${JSON.stringify(weatherData)}}`)
       })
-     }, 3000)
+    })
+    console.log(weatherPromise)
   }, []);
+
+  console.log(`Pre Render: The current value of weather data is: ${JSON.stringify(weatherData)}}`)
 
   return (
     <>
@@ -29,7 +36,7 @@ export function App() {
       <h1>Vite + Preact Weather Demo App</h1>
       { weatherData && (
         <div class="card">
-          <p>Current temperature is { weatherData.temperature }°{ weatherData.temperatureUnit }</p>
+          <p>Current temperature is { weatherData.temperature }{ weatherData.temperatureUnit }</p>
         </div>
       ) }
     </>
