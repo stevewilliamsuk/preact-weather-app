@@ -11,6 +11,7 @@ export function App() {
   async function loadWeather() {
     const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`)
     const weatherJson = await response.json()
+    console.log(weatherData)
     setWeatherData({
       temperature: weatherJson.current.temperature_2m,
       temperatureUnit: weatherJson.current_units.temperature_2m
@@ -41,6 +42,7 @@ export function App() {
           <br />
           Lng: <input type="text" value={lng} onChange={e => { setLng(e.target.value) }} />
         </form>
+        <button onClick={async () => { await loadWeather()}}>Update</button>
       </div>
       { weatherData && (
         <div class="card">
