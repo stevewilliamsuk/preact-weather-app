@@ -4,10 +4,12 @@ import viteLogo from '/vite.svg'
 import './app.css'
 
 export function App() {
-  const [weatherData, setWeatherData] = useState();
+  const [lat, setLat] = useState(52.52)
+  const [lng, setLng] = useState(13.41)
+  const [weatherData, setWeatherData] = useState()
 
   useEffect(async function() {
-    const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m")
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`)
     const weatherJson = await response.json()
     setWeatherData({
       temperature: weatherJson.current.temperature_2m,
