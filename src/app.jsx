@@ -4,12 +4,15 @@ import viteLogo from '/vite.svg'
 import './app.css'
 
 export function App() {
-  const [weatherData, setWeatherData] = useState({});
+  const [weatherData, setWeatherData] = useState();
 
   useEffect(function() {
     console.log("useEffect fired")
     setTimeout(() => { 
-      setWeatherData({ hiTeam: "Wello Horld" })
+      setWeatherData({
+        temperature: 8,
+        temperatureUnit: "C"
+      })
      }, 3000)
   }, []);
 
@@ -24,10 +27,11 @@ export function App() {
         </a>
       </div>
       <h1>Vite + Preact Weather Demo App</h1>
-      <div class="card">
-        <p>Current temperature is 8°C</p>
-      </div>
-      { JSON.stringify(weatherData) }
+      { weatherData && (
+        <div class="card">
+          <p>Current temperature is { weatherData.temperature }°{ weatherData.temperatureUnit }</p>
+        </div>
+      ) }
     </>
   )
 }
