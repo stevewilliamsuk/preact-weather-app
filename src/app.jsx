@@ -1,9 +1,17 @@
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 import preactLogo from './assets/preact.svg'
 import viteLogo from '/vite.svg'
 import './app.css'
 
 export function App() {
+  const [weatherData, setWeatherData] = useState({});
+
+  useEffect(function() {
+    console.log("useEffect fired")
+    setTimeout(() => { 
+      setWeatherData({ hiTeam: "Wello Horld" })
+     }, 3000)
+  }, []);
 
   return (
     <>
@@ -19,6 +27,7 @@ export function App() {
       <div class="card">
         <p>Current temperature is 8°C</p>
       </div>
+      { JSON.stringify(weatherData) }
     </>
   )
 }
