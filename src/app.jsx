@@ -6,22 +6,14 @@ import './app.css'
 export function App() {
   const [weatherData, setWeatherData] = useState();
 
-  useEffect(function() {
-    console.log("useEffect fired")
-    const weatherPromise = fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m").then(function(response) {
-      response.json().then(function(json) {
-        console.log(json)
-        setWeatherData({
-          temperature: json.current.temperature_2m,
-          temperatureUnit: json.current_units.temperature_2m
-        })
-        console.log(`Post Set: The current value of weather data is: ${JSON.stringify(weatherData)}}`)
-      })
+  useEffect(async function() {
+    const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m")
+    const weatherJson = await response.json()
+    setWeatherData({
+      temperature: weatherJson.current.temperature_2m,
+      temperatureUnit: weatherJson.current_units.temperature_2m
     })
-    console.log(weatherPromise)
   }, []);
-
-  console.log(`Pre Render: The current value of weather data is: ${JSON.stringify(weatherData)}}`)
 
   return (
     <>
