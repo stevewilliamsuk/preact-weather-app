@@ -37,9 +37,9 @@ export function App() {
       <div class="card">
         <h2>Location</h2>
         <form>
-          Lat: <input type="text" value={lat} />
+          Lat: <input type="text" value={lat} onChange={e => { setLat(e.target.value) }} />
           <br />
-          Lng: <input type="text" value={lng} />
+          Lng: <input type="text" value={lng} onChange={e => { setLng(e.target.value) }} />
         </form>
       </div>
       { weatherData && (
